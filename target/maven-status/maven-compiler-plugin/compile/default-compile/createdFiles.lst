@@ -1,1 +1,2 @@
-com\example\ElectronicInvoiceServlet.class
+com\example\controllers\SendElectronicInvoices.class
+com\example\controllers\FrontControllerServlet.class
