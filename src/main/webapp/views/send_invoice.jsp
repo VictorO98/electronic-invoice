@@ -7,25 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="send_invoice" class="section">
-  <h2>Nuestros Servicios</h2>
-  <ul>
-    <li>Ingrese la data a cargar:</li>
-    <form action="#" method="post">
-      <label for="monto">Data:</label>
-      <div id="dynamic-fields">
-        <div class="input-group">
-          <input type="number" id="monto" name="monto[]" placeholder="Ingrese la data" required class="input-large">
-        </div>
-      </div>
-      <button type="button" id="add-field" class="cta-button">+</button>
-      <button type="submit" class="cta-button">Cargar Data</button>
-    </form>
-
-    <br>
-
-    <li>Seleccione para Generar Json</li>
-    <form action="#" method="post">
-      <button type="submit" class="cta-button">Generar</button>
-    </form>
-  </ul>
+    <div class="container">
+        <h1>Información Procarga</h1>
+        <form action="#" method="post">
+            <label>Facturas</label>
+            <input type="number" id="periodo-procargas" placeholder="Periodo" required class="input-individual">
+            <br>
+            <div id="dynamic-fields">
+                <div class="input-group">
+                    <button type="button" id="add-field" class="add-button">+</button>
+                    <input type="number" id="id-facturas-procargas" name="monto[]" placeholder="Id Factura" required class="input-large">
+                    <button type="submit" class="cta-button">Cargar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

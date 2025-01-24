@@ -36,6 +36,87 @@ header h1 {
     margin-bottom: 20px;
 }
 
+.input-individual {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.input-group input {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.cta-button {
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #4CAF50;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #45a049;
+}
+
+.add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #2196F3;
+    color: white;
+    font-size: 20px;
+    line-height: 40px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.add-button:hover {
+    background-color: #1e88e5;
+}
+
+.delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #ff0000;
+    color: white;
+    font-size: 15px;
+    line-height: 45px;
+    margin-right: 15px;
+    cursor: pointer;
+    border: none;
+}
+
+.delete-button:hover {
+    background-color: #f53b1f;
+}
+
 /* Menú hamburguesa */
 .menu-toggle {
     cursor: pointer;
