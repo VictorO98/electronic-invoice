@@ -12,9 +12,9 @@
 <div class="container-charge">
     <h1>Información Procarga</h1>
 
-    <% if (request.getAttribute("message") != null) { %>
-    <div class="<%= "success".equals(request.getAttribute("messageType")) ? "alert-success" : "alert-error" %>">
-        <%= request.getAttribute("message") %>
+    <% if (request.getAttribute("messageCharge") != null) { %>
+    <div class="<%= "success".equals(request.getAttribute("messageTypeCharge")) ? "alert-success" : "alert-error" %>">
+        <%= request.getAttribute("messageCharge") %>
     </div>
     <% } %>
 
@@ -66,7 +66,7 @@
         </div>
 
         <button type="submit" name="actionType" value="load" class="cta-button">Cargar</button>
-        <button type="submit" name="actionType" value="loadALl" class="cta-button">Cargar Todo</button>
+        <button type="submit" name="actionType" value="loadAll" class="cta-button">Cargar Todo</button>
     </form>
 </div>
 

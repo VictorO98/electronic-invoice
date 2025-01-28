@@ -6,41 +6,42 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
+    public Connection connection;
 
-    public static Connection getConnection() throws SQLException {
-        String url = "jdbc:oracle:thin:@192.168.1.7:1521:OPENFLEX"; // Reemplaza "ORCL" con tu SID o servicio
+    public DatabaseConnection() {}
+
+    public void getConnection() throws SQLException, ClassNotFoundException   {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        String url = "jdbc:oracle:thin:@192.168.1.7:1521:OPENFLEX";
         String username = "ebilling";
         String password = "exp3rt";
 
-        return DriverManager.getConnection(url, username, password);
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection established");
+        } catch (Exception e) {
+            System.out.println("Exception inside connect(): " + e);
+            e.printStackTrace();
+        }
     }
 
-    public static void callProcedure(int periodo, int idFactura) {
-        Connection connection = null;
+    public void executeProcedure(String procedureSql, Object... params) throws SQLException {
         CallableStatement stmt = null;
 
         try {
-            connection = getConnection();
-            String sql = "{call EB_PROCARGA(?, ?)}";
-            stmt = connection.prepareCall(sql);
-            stmt.setInt(1, periodo);
-            stmt.setInt(2, idFactura);
+            stmt = connection.prepareCall(procedureSql);
+
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
 
             stmt.execute();
-            System.out.println("Procedimiento ejecutado con éxito.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Successfully executed procedure: " + procedureSql);
         } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (stmt != null) {
+                stmt.close();
             }
         }
     }
+
 }

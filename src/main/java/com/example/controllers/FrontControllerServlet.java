@@ -17,10 +17,9 @@ public class FrontControllerServlet extends HttpServlet {
         if ("chargeInvoices".equals(action)) {
             request.setAttribute("activeSection", "send_invoice");
             if ("load".equals(actionType)) {
-                System.out.println("Button 'Charge' pressed.");
                 request.getRequestDispatcher("/ChargeInvoicesIds").forward(request, response);
             } else if ("loadAll".equals(actionType)) {
-                System.out.println("Button 'Charge All' pressed");
+                request.getRequestDispatcher("/ChargeAllInvoices").forward(request, response);
             }
         } else {
             request.getRequestDispatcher("/views/index.jsp").forward(request, response);

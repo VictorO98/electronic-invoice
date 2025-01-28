@@ -1,3 +1,4 @@
+com\example\controllers\ChargeAllInvoicesController.class
+com\example\controllers\FrontControllerServlet.class
 com\example\DatabaseConnection.class
 com\example\controllers\ChargeInvoicesIdsController.class
-com\example\controllers\FrontControllerServlet.class
