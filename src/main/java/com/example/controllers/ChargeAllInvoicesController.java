@@ -1,6 +1,8 @@
 package com.example.controllers;
 
 import com.example.DatabaseConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,8 @@ import java.sql.SQLException;
 
 @WebServlet("/ChargeAllInvoices")
 public class ChargeAllInvoicesController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(ChargeAllInvoicesController.class);
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,16 +33,8 @@ public class ChargeAllInvoicesController extends HttpServlet {
             try {
                 databaseConnection.getConnection();
                 databaseConnection.executeProcedure("{call EB_PROCARGA(?, ?)}", periodInt, -1);
-            } catch (SQLException e) {
-                System.out.println("Database connection error: " + e);
-                message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
-                messageType = "error";
-            } catch (ClassNotFoundException  e) {
-                System.out.println("Oracle JDBC Driver not found: " + e);
-                message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
-                messageType = "error";
             } catch (Exception e) {
-                System.out.println("Close Connection Exception : " + e);
+                logger.error("Close Connection Exception : {}", String.valueOf(e));
                 message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
                 messageType = "error";
             }
@@ -49,10 +45,5 @@ public class ChargeAllInvoicesController extends HttpServlet {
         request.setAttribute("activeSection", "send_invoice");
 
         request.getRequestDispatcher("/views/index.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().println("ChargeInvoicesIds: Method Get Not Implemented.");
     }
 }

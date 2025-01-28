@@ -25,10 +25,5 @@ public class FrontControllerServlet extends HttpServlet {
             request.getRequestDispatcher("/views/index.jsp").forward(request, response);
         }
     }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().println("FrontControllerServlet: Method get not implemented yet.");
-    }
 }
 

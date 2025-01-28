@@ -1,16 +1,22 @@
 package com.example;
 
+import com.example.controllers.ChargeInvoicesIdsController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
     public Connection connection;
+
 
     public DatabaseConnection() {}
 
-    public void getConnection() throws SQLException, ClassNotFoundException   {
+    public void getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("oracle.jdbc.driver.OracleDriver");
         String url = "jdbc:oracle:thin:@192.168.1.7:1521:OPENFLEX";
         String username = "ebilling";
@@ -18,10 +24,10 @@ public class DatabaseConnection {
 
         try {
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Connection established");
+            logger.info("Connection established");
         } catch (Exception e) {
-            System.out.println("Exception inside connect(): " + e);
-            e.printStackTrace();
+            logger.error("Exception inside connect(): {}", String.valueOf(e));
+            throw e;
         }
     }
 
@@ -36,7 +42,9 @@ public class DatabaseConnection {
             }
 
             stmt.execute();
-            System.out.println("Successfully executed procedure: " + procedureSql);
+            logger.info("Successfully executed procedure: {}", procedureSql);
+        } catch (Exception e) {
+            logger.error("Exception inside executeProcedure({}): {}", procedureSql, String.valueOf(e));
         } finally {
             if (stmt != null) {
                 stmt.close();
