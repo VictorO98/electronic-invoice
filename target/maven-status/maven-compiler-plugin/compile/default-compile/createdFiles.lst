@@ -1,2 +1,3 @@
-com\example\controllers\SendElectronicInvoices.class
+com\example\DatabaseConnection.class
+com\example\controllers\ChargeInvoicesIdsController.class
 com\example\controllers\FrontControllerServlet.class

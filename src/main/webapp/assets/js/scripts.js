@@ -1,8 +1,10 @@
+// Function to set toggle menu
 function toggleMenu() {
     const menu = document.getElementById('menu');
     menu.style.display = (menu.style.display === 'block' ? 'none' : 'block');
 }
 
+// Function to show section menu electronic invoice
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => section.classList.remove('active'));
@@ -15,12 +17,13 @@ function showSection(sectionId) {
     menu.style.display = 'none';
 }
 
+// Toast That allow or not add new ids invoices
 document.addEventListener("DOMContentLoaded", function () {
     const maxFields = 5; // Límite de 5 campos
-    const dynamicFields = document.getElementById("dynamic-fields");
-    const addFieldButton = document.getElementById("add-field");
+    const dynamicFields = document.getElementById("dynamic-fields-charge");
+    const addFieldButton = document.getElementById("add-field-charge");
 
-    // Configuración de Toastr
+    // Toastr configuration
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -46,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const newField = document.createElement("div");
             newField.classList.add("input-group");
             newField.innerHTML = `
-                    <input type="number" name="monto[]" placeholder="Id Factura" required class="input-large">     
+                    <input type="number" name="ids-invoices[]" placeholder="Id Factura" required class="input-large">     
                     <button type="button" class="delete-button remove-field" style="margin-left: 10px;">x</button> 
                 `;
 
@@ -59,4 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
             toastr["error"]("Solo puedes añadir hasta 5 campos.", "Error");
         }
     });
+
+    // Show the active section if it's defined
+    if (activeSection) {
+        showSection(activeSection);
+    }
 });

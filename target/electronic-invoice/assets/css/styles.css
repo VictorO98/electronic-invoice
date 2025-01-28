@@ -45,6 +45,22 @@ header h1 {
     max-width: 300px;
 }
 
+.input-group-individual {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    justify-content: center;
+}
+
+.input-group-individual input {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
 .input-group {
     display: flex;
     align-items: center;
@@ -218,4 +234,33 @@ footer {
     nav a {
         font-size: 1.2rem;
     }
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Alinea los hijos verticalmente */
+    margin-bottom: 1rem; /* Espaciado entre grupos de campos */
+}
+
+label {
+    font-weight: bold; /* Opcional: hace que el texto sea más visible */
+    margin-bottom: 0.5rem; /* Espaciado entre el label y el input */
 }

@@ -12,7 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <script>
+        const activeSection = "<%= request.getAttribute("activeSection") != null ? request.getAttribute("activeSection") : "" %>";
+    </script>
 </head>
 
 <body>
@@ -38,7 +40,9 @@
         </div>
 
         <%--Envio de Factura electronica--%>
-        <jsp:include page="send_invoice.jsp" />
+        <div id="send_invoice" class="section">
+            <jsp:include page="send_invoice.jsp" />
+        </div>
     </main>
 
     <footer>
@@ -46,6 +50,7 @@
     </footer>
 
     <script src="<%= request.getContextPath() %>/assets/js/scripts.js"></script>
+
 </body>
 
 </html>
