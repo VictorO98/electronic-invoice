@@ -1,0 +1,24 @@
+<configuration>
+
+    <!-- Configurar el nivel de logs -->
+    <root level="info">
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- Appender para escribir en un archivo de logs -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<file>/var/logs/mi-aplicacion.log</file>  Ruta del archivo de logs -->
+        <file>C:/logs/mi-aplicacion.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--<fileNamePattern>/var/logs/mi-aplicacion-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+            <fileNamePattern>C:/logs/mi-aplicacion-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory> <!-- Guardar 7 días de logs -->
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+</configuration>
