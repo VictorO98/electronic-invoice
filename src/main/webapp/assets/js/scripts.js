@@ -19,47 +19,44 @@ function showSection(sectionId) {
 
 // Toast That allow or not add new ids invoices
 document.addEventListener("DOMContentLoaded", function () {
-    const maxFields = 5; // Límite de 5 campos
-    const dynamicFields = document.getElementById("dynamic-fields-charge");
-    const addFieldButton = document.getElementById("add-field-charge");
+    console.log('Botón de agregar JSON presionado');
+    const maxFields = 5;
+    const dynamicFieldsCharge = document.getElementById("dynamic-fields-charge");
+    const addFieldButtonCharge = document.getElementById("add-field-charge");
+    const dynamicFieldsJson = document.getElementById("dynamic-fields-json");
+    const addFieldButtonJson = document.getElementById("add-field-json");
 
-    // Toastr configuration
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
-
-    addFieldButton.addEventListener("click", function () {
-        const fieldCount = dynamicFields.querySelectorAll(".input-group").length;
+    // Function to add new field in id invoice
+    function addInvoiceField(container) {
+        const fieldCount = container.querySelectorAll(".input-group").length;
 
         if (fieldCount < maxFields) {
             const newField = document.createElement("div");
             newField.classList.add("input-group");
             newField.innerHTML = `
-                    <input type="number" name="ids-invoices[]" placeholder="Id Factura" required class="input-large">     
-                    <button type="button" class="delete-button remove-field" style="margin-left: 10px;">x</button> 
-                `;
+                <input type="number" name="ids-invoices[]" placeholder="Id Factura" required class="input-large">
+                <button type="button" class="delete-button remove-field" style="margin-left: 10px;">x</button>
+            `;
 
-            dynamicFields.appendChild(newField);
-
-            newField.querySelector(".remove-field").addEventListener("click", function () {
-                newField.remove();
-            });
+            container.appendChild(newField);
         } else {
-            toastr["error"]("Solo puedes añadir hasta 5 campos.", "Error");
+            alert("Solo puedes añadir hasta 5 campos.", "Error");
+        }
+    }
+
+    // Event to add new dynamic fields in both sections
+    addFieldButtonCharge.addEventListener("click", function () {
+        addInvoiceField(dynamicFieldsCharge);
+    });
+
+    addFieldButtonJson.addEventListener("click", function () {
+        addInvoiceField(dynamicFieldsJson);
+    });
+
+    // Delegate events to delete fields
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("remove-field")) {
+            event.target.closest(".input-group").remove();
         }
     });
 
