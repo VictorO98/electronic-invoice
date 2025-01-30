@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class DatabaseConnection {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
@@ -42,7 +43,7 @@ public class DatabaseConnection {
             }
 
             stmt.execute();
-            logger.info("Successfully executed procedure: {}", procedureSql);
+            logger.info("Successfully executed procedure: {}, with params: {}", procedureSql, Arrays.toString(params));
         } catch (Exception e) {
             logger.error("Exception inside executeProcedure({}): {}", procedureSql, String.valueOf(e));
         } finally {

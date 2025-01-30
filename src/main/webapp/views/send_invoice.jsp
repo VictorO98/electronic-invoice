@@ -35,7 +35,7 @@
         </div>
 
         <button type="submit" name="actionType" value="load" class="cta-button">Cargar</button>
-        <button type="submit" name="actionType" value="loadALl" class="cta-button">Cargar Todo</button>
+        <button type="submit" name="actionType" value="loadAll" class="cta-button">Cargar Todo</button>
     </form>
 </div>
 

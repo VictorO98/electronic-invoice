@@ -18,11 +18,14 @@ public class ChargeAllInvoicesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        logger.info("Charge All Invoices");
         DatabaseConnection databaseConnection = new DatabaseConnection();
         String period = request.getParameter("period");
 
         String message = "Facturas Procesadas Exitosamente.";
         String messageType = "success";
+
+        logger.info("Period: {}", period);
 
         if (period == null || period.isEmpty()) {
             message = "El campo 'Periodo' es obligatorio.";
