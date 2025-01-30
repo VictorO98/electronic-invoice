@@ -35,7 +35,7 @@
         </div>
 
         <button type="submit" name="actionType" value="load" class="cta-button">Cargar</button>
-        <button type="submit" name="actionType" value="loadALl" class="cta-button">Cargar Todo</button>
+        <button type="submit" name="actionType" value="loadAll" class="cta-button">Cargar Todo</button>
     </form>
 </div>
 
@@ -44,19 +44,20 @@
 <div class="container-json">
     <h1>Generar Json</h1>
 
-    <% if (request.getAttribute("message") != null) { %>
-    <div class="<%= "success".equals(request.getAttribute("messageType")) ? "alert-success" : "alert-error" %>">
-        <%= request.getAttribute("message") %>
+    <% if (request.getAttribute("messageJson") != null) { %>
+    <div class="<%= "success".equals(request.getAttribute("messageTypeJson")) ? "alert-success" : "alert-error" %>">
+        <%= request.getAttribute("messageJson") %>
     </div>
     <% } %>
 
     <form action="<%= request.getContextPath() %>/controller/" method="post">
-        <input type="hidden" name="action" value="chargeInvoices">
+        <input type="hidden" name="action" value="generateJson">
 
-        <label>Facturas</label>
-        <input type="number" id="period-json" name="period" placeholder="Periodo" required class="input-individual">
+        <div class="input-group-individual">
+            <input type="number" id="period-json" name="period" placeholder="Periodo" required class="input-individual">
+        </div>
 
-        <p></p>
+        </br>
 
         <div id="dynamic-fields-json">
             <div class="input-group">

@@ -28,6 +28,15 @@ public class FrontControllerServlet extends HttpServlet {
                 logger.info("Load All Charge Invoices");
                 request.getRequestDispatcher("/ChargeAllInvoices").forward(request, response);
             }
+        } else if ("generateJson".equals(action)) {
+            request.setAttribute("activeSection", "send_invoice");
+            if ("load".equals(actionType)) {
+                logger.info("Load Generate Json Ids Invoices");
+                request.getRequestDispatcher("/GenerateJsonIdsInvoices").forward(request, response);
+            } else if ("loadAll".equals(actionType)) {
+                logger.info("Load Generate Json all Invoices");
+                request.getRequestDispatcher("/GenerateJsonAllInvoices").forward(request, response);
+            }
         } else {
             request.getRequestDispatcher("/views/index.jsp").forward(request, response);
         }
