@@ -1,13 +1,9 @@
 package com.example.controllers;
 
 import com.example.DatabaseConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,21 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/ChargeInvoicesIds")
 public class ChargeInvoicesIdsController extends HttpServlet {
-    private static final Logger logger = LoggerFactory.getLogger(ChargeInvoicesIdsController.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        logger.info("Charge Invoices Ids Controller");
         DatabaseConnection databaseConnection = new DatabaseConnection();
         String period = request.getParameter("period");
         String[] idsInvoices = request.getParameterValues("ids-invoices[]");
 
         String message = "Facturas Procesadas Exitosamente.";
         String messageType = "success";
-
-        logger.info("Period: {}", period);
-        logger.info("idsInvoices: {}", Arrays.toString(idsInvoices));
 
         if (period == null || period.isEmpty()) {
             message = "El campo 'Periodo' es obligatorio.";
@@ -50,7 +41,7 @@ public class ChargeInvoicesIdsController extends HttpServlet {
                         int idInvoice = Integer.parseInt(invoiceId.trim());
                         validInvoices.add(idInvoice);
                     } catch (NumberFormatException e) {
-                        logger.warn("Invalid Id Invoice: {}", invoiceId);
+                        System.err.println("Error Charge Ids Invoices: " + e.getMessage());
                     }
                 }
 
@@ -63,13 +54,14 @@ public class ChargeInvoicesIdsController extends HttpServlet {
                             databaseConnection.getConnection();
                             databaseConnection.executeProcedure("{call EB_PROCARGA(?, ?)}", periodInt, idInvoice);
                         } catch (Exception e) {
-                            logger.error("Error ejecutando el procedimiento con ID {}: {}", idInvoice, e.getMessage(), e);
+                            System.err.println("Error Charge Ids Invoices: " + e.getMessage());
                             message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
                             messageType = "error";
                         }
                     }
                 }
             } catch (NumberFormatException e) {
+                System.err.println("Error Charge Ids Invoices: " + e.getMessage());
                 message = "El campo 'Periodo' debe ser un número válido.";
                 messageType = "error";
             }

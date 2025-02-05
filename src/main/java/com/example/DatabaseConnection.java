@@ -1,8 +1,5 @@
 package com.example;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +11,6 @@ import java.util.Arrays;
 import java.util.Properties;
 
 public class DatabaseConnection {
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
     public Connection connection;
 
     public DatabaseConnection() {}
@@ -40,9 +36,9 @@ public class DatabaseConnection {
             String password = env.getProperty("DB_PASSWORD");
 
             connection = DriverManager.getConnection(url, username, password);
-            logger.info("Connection established");
+            System.out.println("Connection established");
         } catch (Exception e) {
-            logger.error("Exception inside connect(): {}", String.valueOf(e));
+            System.err.println("Error to connect database: " + e.getMessage());
             throw e;
         }
     }
@@ -58,9 +54,9 @@ public class DatabaseConnection {
             }
 
             stmt.execute();
-            logger.info("Successfully executed procedure: {}, with params: {}", procedureSql, Arrays.toString(params));
+            System.err.println("Successfully executed procedure: " + procedureSql + " with params: " + Arrays.toString(params));
         } catch (Exception e) {
-            logger.error("Exception inside executeProcedure({}): {}", procedureSql, String.valueOf(e));
+            System.err.println("Error to execute procedure " + procedureSql + ": " + e.getMessage());
         } finally {
             if (stmt != null) {
                 stmt.close();
