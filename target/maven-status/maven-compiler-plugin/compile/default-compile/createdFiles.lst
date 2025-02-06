@@ -1,6 +1,0 @@
-com\example\controllers\GenerateJsonIdsInvoicesController.class
-com\example\controllers\FrontControllerServlet.class
-com\example\DatabaseConnection.class
-com\example\controllers\ChargeAllInvoicesController.class
-com\example\controllers\GenerateJsonAllInvoicesController.class
-com\example\controllers\ChargeInvoicesIdsController.class

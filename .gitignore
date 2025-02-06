@@ -2,3 +2,4 @@
 src/main/resources/db.properties
 target/classes/db.properties
 target/electronic-invoice/WEB-INF/classes/db.properties
+target/
