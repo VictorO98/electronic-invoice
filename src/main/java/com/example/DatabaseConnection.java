@@ -32,13 +32,9 @@ public class DatabaseConnection {
         try {
             Properties env = loadEnv();
 
-            // String url = env.getProperty("DB_URL");
-            // String username = env.getProperty("DB_USERNAME");
-            // String password = env.getProperty("DB_PASSWORD");
-
-            String url = "jdbc:oracle:thin:@192.168.1.7:1521:OPENFLEX";
-            String username = "ebilling";
-            String password = "exp3rt";
+            String url = env.getProperty("DB_URL");
+            String username = env.getProperty("DB_USERNAME");
+            String password = env.getProperty("DB_PASSWORD");
 
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connection established");
