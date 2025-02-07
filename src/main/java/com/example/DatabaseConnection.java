@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Properties;
 
 public class DatabaseConnection {
@@ -30,13 +31,22 @@ public class DatabaseConnection {
         Class.forName("oracle.jdbc.driver.OracleDriver");
 
         try {
+            Locale.setDefault(new Locale("es", "ES"));
+            System.setProperty("user.language", "es");
+            System.setProperty("user.region", "ES");
+            System.setProperty("oracle.jdbc.defaultNChar", "true");
+
             Properties env = loadEnv();
 
             String url = env.getProperty("DB_URL");
-            String username = env.getProperty("DB_USERNAME");
-            String password = env.getProperty("DB_PASSWORD");
 
-            connection = DriverManager.getConnection(url, username, password);
+            Properties props = new Properties();
+            props.setProperty("user", env.getProperty("DB_USERNAME"));
+            props.setProperty("password", env.getProperty("DB_PASSWORD"));
+            props.setProperty("oracle.jdbc.defaultNChar","true");
+            props.setProperty("NLS_LANG", "LATIN AMERICAN SPANISH_AMERICA.US7ASCII");
+
+            connection = DriverManager.getConnection(url, props);
             System.out.println("Connection established");
         } catch (Exception e) {
             System.err.println("Error to connect database: " + e.getMessage());
