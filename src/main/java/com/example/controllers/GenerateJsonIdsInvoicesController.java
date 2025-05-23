@@ -15,7 +15,8 @@ import java.util.List;
 public class GenerateJsonIdsInvoicesController extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         String period = request.getParameter("period");
         String[] idsInvoices = request.getParameterValues("ids-invoices[]");
@@ -26,7 +27,8 @@ public class GenerateJsonIdsInvoicesController extends HttpServlet {
         if (period == null || period.isEmpty()) {
             message = "El campo 'Periodo' es obligatorio.";
             messageType = "error";
-        } else if (idsInvoices == null || idsInvoices.length == 0) {
+        } else if ("load".equals(request.getParameter("actionType"))
+                && (idsInvoices == null || idsInvoices.length == 0)) {
             message = "Debes agregar al menos un ID de factura.";
             messageType = "error";
         } else {
@@ -34,29 +36,41 @@ public class GenerateJsonIdsInvoicesController extends HttpServlet {
                 int periodInt = Integer.parseInt(period);
                 List<Integer> validInvoices = new ArrayList<>();
 
-                // Validate Ids Invoices
-                for (String invoiceId : idsInvoices) {
-                    try {
-                        int idInvoice = Integer.parseInt(invoiceId.trim());
-                        validInvoices.add(idInvoice);
-                    } catch (NumberFormatException e) {
-                        System.err.println("Error GenerateJsonAllInvoicess: " + e.getMessage());
-                    }
-                }
-
-                if (validInvoices.isEmpty()) {
-                    message = "Todos los IDs de factura ingresados son inválidos. Debes ingresar al menos un ID válido.";
-                    messageType = "error";
-                } else {
-                    for (int idInvoice : validInvoices) {
+                // Validate Ids Invoices only when loading specific invoices
+                if ("load".equals(request.getParameter("actionType"))) {
+                    for (String invoiceId : idsInvoices) {
                         try {
-                            databaseConnection.getConnection();
-                            databaseConnection.executeProcedure("{call EB_JSON(?, ?, ?)}", 1, periodInt, idInvoice);
-                        } catch (Exception e) {
+                            int idInvoice = Integer.parseInt(invoiceId.trim());
+                            validInvoices.add(idInvoice);
+                        } catch (NumberFormatException e) {
                             System.err.println("Error GenerateJsonAllInvoicess: " + e.getMessage());
-                            message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
-                            messageType = "error";
                         }
+                    }
+
+                    if (validInvoices.isEmpty()) {
+                        message = "Todos los IDs de factura ingresados son inválidos. Debes ingresar al menos un ID válido.";
+                        messageType = "error";
+                    } else {
+                        for (int idInvoice : validInvoices) {
+                            try {
+                                databaseConnection.getConnection();
+                                databaseConnection.executeProcedure("{call EB_JSON(?, ?, ?)}", 1, periodInt, idInvoice);
+                            } catch (Exception e) {
+                                System.err.println("Error GenerateJsonAllInvoicess: " + e.getMessage());
+                                message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
+                                messageType = "error";
+                            }
+                        }
+                    }
+                } else {
+                    // For loadAll, just process with -1 as invoice ID
+                    try {
+                        databaseConnection.getConnection();
+                        databaseConnection.executeProcedure("{call EB_JSON(?, ?, ?)}", 1, periodInt, -1);
+                    } catch (Exception e) {
+                        System.err.println("Error GenerateJsonAllInvoicess: " + e.getMessage());
+                        message = "Ha ocurrido un error inesperado al procesar la solicitud. Por favor, intente nuevamente más tarde.";
+                        messageType = "error";
                     }
                 }
             } catch (NumberFormatException e) {
